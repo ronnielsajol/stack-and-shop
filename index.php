@@ -1,23 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php 
+require_once 'includes/database.php';
+$db = new Database();
+$products = $db->getProducts();
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stack and Shop</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
+include 'views/shared/header.php'; 
+?>
 
-<body>
-  <header>
-    <h1>Welcome to Stack and Shop</h1>
-  </header>
-  <main>
-    <p>Boilerplateg</p>
-  </main>
-  <footer>
-    <p>&copy; <?php echo date("Y"); ?> Stack and Shop. All rights reserved.</p>
-  </footer>
-</body>
+<main>
+    <div class="product-grid">
+        <?php foreach($products as $product): ?>
+            <div class="item-card">
+                <img src="<?php echo htmlspecialchars($product['image']); ?>" 
+                     alt="<?php echo htmlspecialchars($product['name']); ?>" 
+                     class="item-image">
+                <h2 class="item-name"><?php echo htmlspecialchars($product['name']); ?></h2>
+                <p class="item-price">$<?php echo number_format($product['price'], 2); ?></p>
+                <button class="add-to-cart-btn" 
+                        data-product-id="<?php echo $product['id']; ?>">
+                    Add to Cart
+                </button>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</main>
 
-</html>
+<?php include 'views/shared/footer.php'; ?>
