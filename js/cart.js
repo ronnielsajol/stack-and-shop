@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', function() {
             const productId = this.dataset.productId;
             
-            fetch('includes/cart-actions.php', {
+            fetch('../includes/cart-actions.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const productId = this.closest('.cart-item').dataset.productId;
             const quantity = this.value;
             
-            fetch('includes/cart-actions.php', {
+            fetch('../includes/cart-actions.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', function() {
             const productId = this.dataset.productId;
             
-            fetch('includes/cart-actions.php', {
+            fetch('../includes/cart-actions.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

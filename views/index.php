@@ -1,9 +1,15 @@
 <?php
-require_once 'includes/database.php';
+require_once '../includes/database.php';
 $db = new Database();
 $products = $db->getProducts();
 
-include 'views/shared/header.php';
+include 'shared/header.php';
+
+if (!isset($_SESSION['user_id'])) {
+    // Redirect to login page if not logged in
+    header('Location: auth/login.php');
+    exit;
+}
 ?>
 
 <main>
@@ -24,4 +30,4 @@ include 'views/shared/header.php';
     </div>
 </main>
 
-<?php include 'views/shared/footer.php'; ?>
+<?php include 'shared/footer.php'; ?>

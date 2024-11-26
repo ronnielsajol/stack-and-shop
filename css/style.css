@@ -85,3 +85,18 @@ footer {
 	grid-template-columns: repeat(5, minmax(300px, 1fr));
 	gap: 1rem;
 }
+
+.logout-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #f44336; /* Red color for logout */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.logout-btn:hover {
+    background-color: #d32f2f; /* Darker red on hover */
+}
