@@ -1,7 +1,7 @@
 
 <?php
 // Include the database connection file
-require_once '../includes/database.php';
+require_once '../../includes/database.php';
 
 $db = new Database();
 $conn = $db->getConnection();

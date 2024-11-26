@@ -13,6 +13,12 @@ if (!isset($_SESSION['user_id'])) {
 ?>
 
 <main>
+    <div class="merchant-login-container">
+        <a href="auth/merchant-login.php" class="merchant-login-btn">
+            Merchant? Login to manage your store
+        </a>
+    </div>
+
     <div class="product-grid">
         <?php foreach ($products as $product): ?>
             <div class="item-card">
