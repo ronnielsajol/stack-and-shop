@@ -6,6 +6,11 @@ class Database {
         require_once 'config.php';
         $this->conn = $conn;
     }
+
+    public function getConnection() {
+        return $this->conn;
+    }
+    
     
     // Get all products
     public function getProducts() {
