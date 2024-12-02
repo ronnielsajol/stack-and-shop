@@ -2,17 +2,19 @@
 
 require_once __DIR__ . '/../includes/database.php';
 
-class UserController
+class MerchantController
 {
 
   public function __construct()
   {
-    session_start(); // Start the session here
+    session_start();
   }
+
   public function handleRegister()
   {
     $db = new Database();
     $conn = $db->getConnection();
+
 
     $message = '';
 
@@ -21,37 +23,32 @@ class UserController
       $email = $_POST['email'];
       $password = $_POST['password'];
       $confirmPassword = $_POST['confirm_password'];
+      $role = 'merchant';
 
-      // Basic validation
+      //validation
       if ($password !== $confirmPassword) {
         $message = 'Passwords do not match!';
       } else {
-        // Hash the password
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        // Insert user into the database
-        $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
-        $stmt->bind_param('sss', $username, $email, $hashedPassword);
+        $stmt = $conn->prepare("INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)");
+
+        $stmt->bind_param('ssss', $username, $email, $hashedPassword, $role);
 
         if ($stmt->execute()) {
-          // Store success message in session
           session_start();
-          $_SESSION['register_success'] = 'Registration successful! You can now log in.';
+          $_SESSION['register_success'] = "Registration successful! You can now log in.";
 
-          // Redirect to the login page
-          header('Location: /');
+          header('Location: /merchant/login');
           exit;
         } else {
           $message = 'Error: ' . $stmt->error;
         }
-
         $stmt->close();
       }
     }
-
     return $message;
   }
-
 
   public function handleLogin()
   {
@@ -63,18 +60,17 @@ class UserController
       unset($_SESSION['register_success']);
     }
 
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $username = $_POST['username'];
       $password = $_POST['password'];
 
-      // Clean the password to remove any accidental spaces
       $password = trim($password);
 
       $db = new Database();
       $conn = $db->getConnection();
 
-      // Get user by username
-      $stmt = $conn->prepare("SELECT id, password FROM users WHERE username = ?");
+      $stmt = $conn->prepare("SELECT id, username, password, role FROM users WHERE username = ? AND role = 'merchant'");
       $stmt->bind_param('s', $username);
       $stmt->execute();
       $result = $stmt->get_result();
@@ -83,28 +79,19 @@ class UserController
         $user = $result->fetch_assoc();
 
         if (password_verify($password, $user['password'])) {
-          // Correct password, set session
-          $_SESSION['user_id'] = $user['id'];
-          $_SESSION['username'] = $username;
+          $_SESSION['merchant_id'] = $user['id'];
+          $_SESSION['merchant_username'] = $user['username'];
           $_SESSION['role'] = $user['role'];
-          // Redirect to the home page
-          header('Location: /home');
-          exit;
+
+          header('Location: /merchant/dashboard');
         } else {
-          $message = 'Invalid password.';
+          $message = 'Invalid username or password';
         }
       } else {
-        $message = 'User not found.';
+        $message = 'Invalid username or password';
       }
-
-      $stmt->close();
     }
 
-    // Store the error message in session for later use
-    $_SESSION['login_message'] = $message;
-
-    // Redirect back to login page with the message
-    header('Location: /');
-    exit;
+    return $message;
   }
 }

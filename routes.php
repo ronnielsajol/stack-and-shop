@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/router.php';
 require_once __DIR__ . '/controller/UserController.php';
+require_once __DIR__ . '/controller/MerchantController.php';
 
 // ##################################################
 // ##################################################
@@ -16,7 +17,7 @@ get('/register', 'views/auth/register.php');
 get('/logout', 'views/auth/logout.php');
 get('/merchant/login', 'views/auth/merchant-login.php');
 get('/merchant/register', 'views/auth/merchant-register.php');
-
+get('/merchant/dashboard', 'views/merchant-dashboard.php');
 
 post('/login', function () {
   $controller = new UserController();
@@ -27,6 +28,18 @@ post('/register', function () {
   $controller = new UserController();
   $message = $controller->handleRegister();
   require_once __DIR__ . '/views/auth/register.php'; // You can create a register view for form submission
+});
+
+post('/merchant/login', function () {
+  $controller = new MerchantController();
+  $message = $controller->handleLogin();
+  require_once __DIR__ . '/views/auth/merchant-login.php';
+});
+
+post('/merchant/register', function () {
+  $controller = new MerchantController();
+  $message = $controller->handleRegister();
+  require_once __DIR__ . '/views/auth/merchant-register.php';
 });
 
 
