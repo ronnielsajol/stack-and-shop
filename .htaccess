@@ -1,16 +1,3 @@
-Options -Indexes
 RewriteEngine On
-
-# Define the base directory for your application
-
-RewriteBase /stack-and-shop/
-
-# Set default landing page
-
-DirectoryIndex views/auth/login.php
-
-# Redirect all requests to the "views" directory
-
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.\*)$ stack-and-shop/views/$1 [L,QSA]
+RewriteCond %{REQUEST_URI}  !(\.png|\.jpg|\.webp|\.gif|\.jpeg|\.zip|\.css|\.svg|\.js|\.pdf)$
+RewriteRule (.*) routes.php [QSA,L]

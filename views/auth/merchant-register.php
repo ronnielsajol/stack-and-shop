@@ -1,6 +1,6 @@
 <?php
-require_once '../../includes/config.php';
-require_once '../../includes/database.php';
+require_once 'includes/config.php';
+require_once 'includes/database.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Sanitize and validate form input
@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="submit" value="Register">
         </div>
     </form>
-    <p>Already have an account? <a href="merchant-login.php">Login here</a></p>
+    <p>Already have an account? <a href="/merchant/login">Login here</a></p>
 </body>
 
 </html>

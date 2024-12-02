@@ -1,6 +1,6 @@
 <?php
-require_once '../../includes/config.php';
-require_once '../../includes/database.php';
+require_once 'includes/config.php';
+require_once 'includes/database.php';
 
 session_start();
 
@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </form>
 
     <!-- Registration link -->
-    <p>Don't have an account? <a href="merchant-register.php">Register here</a></p>
+    <p>Don't have an account? <a href="/merchant/register">Register here</a></p>
 </body>
 
 </html>
