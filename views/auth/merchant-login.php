@@ -1,39 +1,3 @@
-<?php
-require_once '../../includes/config.php';
-require_once '../../includes/database.php';
-
-session_start();
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Sanitize user inputs
-    $username = $conn->real_escape_string($_POST['username']);
-    $password = $_POST['password'];
-
-    // Query to check for the merchant login in the users table
-    $sql = "SELECT id, username, password, role FROM users WHERE username = '$username' AND role = 'merchant'";
-    $result = $conn->query($sql);
-
-    if ($result->num_rows == 1) {
-        // Fetch the user data from the database
-        $row = $result->fetch_assoc();
-
-        // Verify the password
-        if (password_verify($password, $row['password'])) {
-            // Start session for merchant
-            $_SESSION['merchant_id'] = $row['id'];
-            $_SESSION['merchant_username'] = $row['username'];
-
-            // Redirect to the merchant dashboard
-            header("location: ../merchant-dashboard.php");
-        } else {
-            $error = "Invalid username or password";
-        }
-    } else {
-        $error = "Invalid username or password";
-    }
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,34 +5,71 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Merchant Login</title>
-    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/merchant_login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Ubuntu:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <h2>Merchant Login</h2>
+    <div class="container fade-in">
+        <div class="login-form">
+            <h2>Login</h2>
 
-    <!-- Display error message if login fails -->
-    <?php if (isset($error)) {
-        echo "<p class='error'>$error</p>";
-    } ?>
+            <form id="loginForm" action="/merchant/login" method="POST">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+            <div class="register">
+                <p>Don't have an account? <a href="/merchant/register">Register</a></p>
+            </div>
+            <?php
 
-    <!-- Login form -->
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-        <div>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-        </div>
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-        </div>
-        <div>
-            <input type="submit" value="Login">
-        </div>
-    </form>
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
 
-    <!-- Registration link -->
-    <p>Don't have an account? <a href="merchant-register.php">Register here</a></p>
+            // Check if there is a login message in session
+            if (isset($_SESSION['login_message'])) {
+                $loginMessage = $_SESSION['login_message'];
+                unset($_SESSION['login_message']); // Clear the message after displaying it
+            }
+
+            // Check if there is a registration success message in session
+            if (isset($_SESSION['register_success'])) {
+                $registerSuccessMessage = $_SESSION['register_success'];
+                unset($_SESSION['register_success']); // Clear the message after displaying it
+            }
+
+            // Display the login error message (if any)
+            if (!empty($loginMessage)): ?>
+                <div class="error-message"><?= htmlspecialchars($loginMessage) ?></div>
+            <?php endif; ?>
+
+            <?php
+            // Display the registration success message (if any)
+            if (!empty($registerSuccessMessage)): ?>
+                <div class="success-message"><?= htmlspecialchars($registerSuccessMessage) ?></div>
+            <?php endif; ?>
+
+
+        </div>
+        <div class="hero">
+            <img src="../../assets/images/hero2.png" alt="SNS" class="hero-image">
+            <h1 class="welcome">Welcome to Stack and Shop Merchant </h1>
+            <p>Sell your bricks, One sale at a time!</p>
+        </div>
+    </div>
+
 </body>
 
 </html>

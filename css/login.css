@@ -1,3 +1,7 @@
+* {
+	box-sizing: border-box;
+}
+
 body {
 	font-family: "Roboto", sans-serif;
 	margin: 0;
@@ -5,10 +9,17 @@ body {
 	background-color: #f0f0f0;
 }
 
+.welcome {
+	font-family: "Bungee Spice", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+}
+
 h1,
 h2,
 h3 {
 	font-family: "Montserrat", sans-serif;
+	color: #2f2f2f;
 }
 
 .container {
@@ -33,13 +44,21 @@ h3 {
 .hero {
 	flex: 1;
 	background-color: rgb(255, 141, 0);
-	background: linear-gradient(0deg, rgba(255, 141, 0, 1) 0%, rgba(255, 237, 0, 1) 87%);
+	background: linear-gradient(to bottom, #d5dee7 0%, #e8ebf2 50%, #e2e7ed 100%),
+		linear-gradient(to bottom, rgba(0, 0, 0, 0.02) 50%, rgba(255, 255, 255, 0.02) 61%, rgba(0, 0, 0, 0.02) 73%),
+		linear-gradient(33deg, rgba(255, 255, 255, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%);
+	background-blend-mode: normal, color-burn;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	padding: 2rem;
 	color: #333;
+}
+
+.hero > p {
+	color: #d02200;
+	font-size: 20px;
 }
 
 .hero-image {
@@ -60,7 +79,7 @@ h3 {
 
 h1 {
 	font-size: 2.5rem;
-	margin-bottom: 1rem;
+	margin-bottom: 0;
 }
 
 h2 {
@@ -70,7 +89,13 @@ h2 {
 
 form {
 	width: 100%;
-	max-width: 300px;
+	max-width: 400px;
+	display: flex;
+	flex-direction: column;
+	border: 1px solid rgba(0, 0, 0, 0.189);
+	padding: 2.5rem;
+	border-radius: 10px;
+	box-shadow: 14px 14px 114px -4px rgba(0, 0, 0, 0.34);
 }
 
 .form-group {
@@ -80,22 +105,22 @@ form {
 label {
 	display: block;
 	margin-bottom: 0.5rem;
+	color: #2f2f2f;
 }
 
 input {
 	width: 100%;
-	padding: 0.5rem;
+	padding: 0.75rem;
 	border: 1px solid #ccc;
-	border-radius: 4px;
+	border-radius: 10px;
 }
 
 button {
-	width: 100%;
 	padding: 0.75rem;
-	background-color: #ffed00;
+	background: linear-gradient(0deg, rgba(255, 91, 15, 0.95) 0%, rgba(255, 225, 0, 0.9) 100%);
 	border: none;
-	border-radius: 4px;
-	color: #333;
+	border-radius: 10px;
+	color: #e7e7e7;
 	font-size: 1rem;
 	cursor: pointer;
 	transition: background-color 0.3s;

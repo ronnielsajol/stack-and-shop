@@ -1,5 +1,5 @@
 <?php
-require_once '../includes/database.php';
+require_once 'includes/database.php';
 $db = new Database();
 $products = $db->getProducts();
 
@@ -7,14 +7,14 @@ include 'shared/header.php';
 
 if (!isset($_SESSION['user_id'])) {
     // Redirect to login page if not logged in
-    header('Location: auth/login.php');
+    header('Location: /');
     exit;
 }
 ?>
 
 <main>
     <div class="merchant-login-container">
-        <a href="auth/merchant-login.php" class="merchant-login-btn">
+        <a href="/logout" class="merchant-login-btn">
             Merchant? Login to manage your store
         </a>
     </div>
