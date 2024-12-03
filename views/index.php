@@ -1,15 +1,19 @@
 <?php
-require_once 'includes/database.php';
-$db = new Database();
+require_once __DIR__ . '/../model/Database.php';
+require_once __DIR__ . '/../model/CartModel.php';
+require_once __DIR__ . '/../helpers/SessionHelper.php';
+
+$db = new CartModel();
 $products = $db->getProducts();
 
+// Initialize the session
+SessionHelper::init();
+
+// Get the current user's ID
+$user_id = SessionHelper::get('user_id');
 include 'shared/header.php';
 
-if (!isset($_SESSION['user_id'])) {
-    // Redirect to login page if not logged in
-    header('Location: /');
-    exit;
-}
+
 ?>
 
 <main>

@@ -4,25 +4,20 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', function() {
             const productId = this.dataset.productId;
             
-            fetch('../includes/cart-actions.php', {
+            fetch('/cart/add', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    action: 'add',
-                    product_id: productId,
-                    quantity: 1
+                    product_id: 123,
+                    quantity: 2
                 })
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Product added to cart!');
-                } else {
-                    alert('Error adding product to cart');
-                }
-            });
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.error('Error:', error));
+
         });
     });
 

@@ -1,6 +1,6 @@
 <?php
-require_once 'includes/config.php';
-require_once 'includes/database.php';
+require_once 'model/Config.php';
+require_once 'model/Database.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Sanitize and validate form input

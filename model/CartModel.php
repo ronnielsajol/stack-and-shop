@@ -1,20 +1,20 @@
 <?php
-class Database {
-    private $conn;
-    
-    public function __construct() {
-        require_once 'config.php';
-        $this->conn = $conn;
-    }
 
-    public function getConnection() {
-        return $this->conn;
+require_once __DIR__ . '/Database.php';  // Use __DIR__ for reliable path resolution
+
+class CartModel {
+    private $conn;
+
+    public function __construct() {
+        $database = new Database();
+        $this->conn = $database->getConnection();
     }
     
-    
+
     // Get all products
     public function getProducts() {
         $sql = "SELECT * FROM products";
+        $result = $this->conn->query($sql);
         $result = $this->conn->query($sql);
         $products = [];
         
@@ -26,7 +26,7 @@ class Database {
         
         return $products;
     }
-    
+
     // Get cart items for a user
     public function getCartItems($user_id) {
         $sql = "SELECT c.*, p.name, p.price, p.image 
@@ -49,21 +49,30 @@ class Database {
         
         return $items;
     }
-    
+
     // Add item to cart
     public function addToCart($user_id, $product_id, $quantity) {
         $sql = "INSERT INTO cart (user_id, product_id, quantity) 
                 VALUES (?, ?, ?) 
                 ON DUPLICATE KEY UPDATE quantity = quantity + ?";
-                
-        $stmt = $this->conn->prepare($sql);
-        if (!$stmt) {
-            return false;
+        
+        try {
+            $stmt = $this->conn->prepare($sql);
+            if (!$stmt) {
+                throw new Exception("Failed to prepare statement: " . $this->conn->error);
+            }
+            $stmt->bind_param("iiii", $user_id, $product_id, $quantity, $quantity);
+            $result = $stmt->execute();
+            if (!$result) {
+                throw new Exception("Failed to execute statement: " . $stmt->error);
+            }
+            return $result;
+        } catch (Exception $e) {
+            error_log('CartModel error: ' . $e->getMessage());
+            throw $e; // Re-throw the exception to be caught in the controller
         }
-        $stmt->bind_param("iiii", $user_id, $product_id, $quantity, $quantity);
-        return $stmt->execute();
     }
-    
+
     // Update cart quantity
     public function updateCartQuantity($user_id, $product_id, $quantity) {
         $sql = "UPDATE cart SET quantity = ? 
@@ -76,7 +85,7 @@ class Database {
         $stmt->bind_param("iii", $quantity, $user_id, $product_id);
         return $stmt->execute();
     }
-    
+
     // Remove item from cart
     public function removeFromCart($user_id, $product_id) {
         $sql = "DELETE FROM cart WHERE user_id = ? AND product_id = ?";

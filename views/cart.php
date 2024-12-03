@@ -1,10 +1,17 @@
 <?php
-require_once '../includes/database.php';
-$db = new Database();
+require_once __DIR__ . '/../model/Database.php';
+require_once __DIR__ . '/../model/CartModel.php';
+require_once __DIR__ . '/../helpers/SessionHelper.php';
 
-// For now, we'll use a dummy user ID (you'll want to implement proper authentication)
-$user_id = 1;
-$cart_items = $db->getCartItems($user_id);
+// Initialize the session
+SessionHelper::init();
+
+// Get the current user's ID
+$user_id = SessionHelper::get('user_id');
+
+// Now you can use $user_id in your cart.php
+$cartModel = new CartModel();
+$cart_items = $cartModel->getCartItems($user_id);
 
 include 'shared/header.php';
 ?>

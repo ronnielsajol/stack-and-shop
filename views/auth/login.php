@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="/stack-and-shop/css/login.css">
+    <link rel="stylesheet" href="/css/login.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,7 +16,7 @@
 <body>
     <div class="container fade-in">
         <div class="hero">
-            <img src="/stack-and-shop/assets/images/hero.png" alt="SNS" class="hero-image">
+            <img src="/assets/images/hero.png" alt="SNS" class="hero-image">
             <h1 class="welcome">Welcome to Stack and Shop</h1>
             <p>Build your imagination, one brick at a time!</p>
         </div>
@@ -38,7 +38,6 @@
                 <p>Don't have an account? <a href="/register">Register</a></p>
             </div>
             <?php
-            session_start();
 
             // Check if there is a login message in session
             if (isset($_SESSION['login_message'])) {

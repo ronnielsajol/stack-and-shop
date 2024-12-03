@@ -1,5 +1,5 @@
 <?php
-session_start(); // Start the session to access $_SESSION
+
 
 $root_path = realpath($_SERVER["DOCUMENT_ROOT"]);
 $project_root = dirname(dirname(dirname(__FILE__)));
@@ -30,7 +30,7 @@ $base_url = rtrim($relative_path, '/');
             <h1>Welcome, Guest!</h1>
         <?php endif; ?>
 
-        <a href="<?php echo $base_url; ?>/views/cart.php" class="cart-icon" aria-label="View shopping cart">
+        <a href="/cart" class="cart-icon" aria-label="View shopping cart">
             <i class="fas fa-shopping-cart"></i>
             <span class="sr-only">Cart</span>
         </a>

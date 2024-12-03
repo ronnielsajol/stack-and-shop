@@ -1,6 +1,6 @@
 <?php
-require_once 'config.php';
-require_once 'database.php';
+require_once '/../model/Config.php';
+require_once '/../model/Database.php';
 
 
 $merchants = [
