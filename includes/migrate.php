@@ -1,6 +1,6 @@
 <?php
 // Include the database configuration
-require_once 'config.php';
+require_once './model/Config.php';
 
 // SQL statements to create tables
 $queries = [
@@ -18,8 +18,8 @@ $queries = [
   "CREATE TABLE IF NOT EXISTS products (
         id INT AUTO_INCREMENT PRIMARY KEY,
         merchant_id INT NOT NULL, -- Links the product to a merchant
-        img_url TEXT NOT NULL,
-        product_name VARCHAR(255) NOT NULL,
+        image TEXT NOT NULL, -- Changed from img_url for consistency
+        name VARCHAR(255) NOT NULL, -- Changed from product_name for consistency
         price DECIMAL(10, 2) NOT NULL,
         quantity INT NOT NULL,
         description TEXT,
@@ -27,8 +27,8 @@ $queries = [
         FOREIGN KEY (merchant_id) REFERENCES users(id) ON DELETE CASCADE
     )",
 
-  // Cart items table
-  "CREATE TABLE IF NOT EXISTS cart_items (
+  // Cart table
+  "CREATE TABLE IF NOT EXISTS cart (
         id INT AUTO_INCREMENT PRIMARY KEY,
         user_id INT NOT NULL,
         product_id INT NOT NULL,

@@ -1,6 +1,6 @@
 <?php
-require_once '/../model/Config.php';
-require_once '/../model/Database.php';
+require_once './model/Config.php';
+require_once './model/Database.php';
 
 
 $merchants = [
@@ -54,7 +54,7 @@ while (($row = fgetcsv($fileHandle)) !== false) {
 
   $merchantId = $merchantIds[$productIndex % count($merchantIds)];
 
-  $stmt = $conn->prepare("INSERT INTO products (merchant_id, img_url, product_name, price, quantity, description) VALUES (?, ?, ?, ?, ?, ?)");
+  $stmt = $conn->prepare("INSERT INTO products (merchant_id, image, name, price, quantity, description) VALUES (?, ?, ?, ?, ?, ?)");
   $stmt->bind_param('issdis', $merchantId, $imgUrl, $productName, $price, $quantity, $description);
   $stmt->execute();
 

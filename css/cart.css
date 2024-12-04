@@ -1,0 +1,19 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+.cart-page {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	background: #f1f1f1;
+	flex-direction: column;
+}
+
+.cart-items {
+	display: flex;
+	gap: 1.5rem;
+}
